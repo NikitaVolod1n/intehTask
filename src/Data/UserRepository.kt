@@ -10,8 +10,10 @@ open class UserRepository {
     fun addUser(user: User): ValidationResult {
         val exists = repo.any { it.id == user.id || it.email == user.email }
         return if(!exists){
-            repo.add(user)
-            repo.sortBy { it.id }
+            repo.apply {
+                add(user)
+                sortBy { it.id }
+            }
             ValidationResult.Success
         }
         else{
@@ -32,8 +34,11 @@ open class UserRepository {
         if(index == -1 || !isValidEmail(user.email) || user.name == ""){
             return ValidationResult.InvalidFormat
         }
-        repo[index].name = user.name
-        repo[index].email = user.email
+        repo[index].apply {
+            name = user.name
+            email = user.email
+        }
+
         return ValidationResult.Success
     }
 
