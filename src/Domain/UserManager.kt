@@ -14,7 +14,7 @@ class UserManager: UserRepository() {
         }
 
         var id = -1
-        if(repo.isEmpty()) id = 1
+        if(repo.find { it.id == 1 } == null) id = 1
         if(repo.size == 1) id = 2
 
         for(i in 0..<repo.size - 1){
